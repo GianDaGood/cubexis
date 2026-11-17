@@ -1,1187 +1,1295 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming 1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUBEXIS | Beyond Every Turn</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        header {
-            padding: 25px 20px;
-            text-align: center;
-            background: #111827;
-            border-bottom: 1px solid #334155;
-        }
+body {
+    background-image: url('8184B6A6-3EC4-429A-A0E0-8C402C95EDB1.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
 
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
+/* HEADER */
 
-        header p {
-            color: #94a3b8;
-        }
+header {
+    background: #111;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-        .container {
-            max-width: 950px;
-            margin: auto;
-            padding: 30px 20px;
-        }
+.logo {
+    color: #ffb400;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
 
-        /* HOME / TOPIC SELECTION */
+.logo span {
+    color: white;
+    font-size: 11px;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
 
-        .welcome {
-            text-align: center;
-            padding: 45px 20px;
-        }
+nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-        .welcome h2 {
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
 
-        .welcome p {
-            color: #cbd5e1;
-            margin-bottom: 10px;
-        }
+nav a:hover {
+    color: #ffb400;
+}
 
-        .topics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-        }
+.cart-count {
+    background: #ffb400;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: none;
+}
 
-        .topic {
-            display: block;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 25px;
-            text-decoration: none;
-            color: white;
-            transition: 0.2s;
-            cursor: pointer;
-        }
+button {
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-        .topic:hover {
-            transform: translateY(-3px);
-            border-color: #64748b;
-        }
+button:hover {
+    transform: translateY(-3px);
+}
 
-        .topic h3 {
-            margin-bottom: 8px;
-        }
+/* HOME */
 
-        .topic p {
-            color: #94a3b8;
-            font-size: 14px;
-        }
+.hero {
+    min-height: calc(100vh - 75px);
+    padding: 40px 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background: rgba(0,0,0,0.45);
+}
 
-        /* LESSON */
+.hero h1 {
+    font-size: 45px;
+    margin-bottom: 25px;
+    animation: slideDown 1s ease;
+}
 
-        .lesson {
-            display: none;
-            background: #111827;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 20px;
-        }
+.hero p {
+    font-size: 19px;
+    margin-bottom: 35px;
+    color: #eee;
+}
 
-        .lesson h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
+.shop-btn {
+    background: #ffb400;
+    color: black;
+    padding: 17px 35px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
 
-        .lesson h3 {
-            margin-top: 30px;
-            margin-bottom: 12px;
-        }
+/* STORE */
 
-        .lesson p {
-            color: #cbd5e1;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
+#storePage, #cartPage {
+    display: none;
+    min-height: 100vh;
+    background: transparent;
+}
 
-        .lesson ul {
-            margin-left: 25px;
-            color: #cbd5e1;
-            line-height: 1.8;
-        }
+.back-home {
+    background: #222;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 25px 7%;
+}
 
-        .lesson-number {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
+/* CATEGORIES AND PRODUCTS */
 
-        pre {
-            background: #020617;
-            border: 1px solid #334155;
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            margin: 15px 0;
-        }
+.categories, .products {
+    padding: 60px 7%;
+    text-align: center;
+    background: rgba(0,0,0,0.55);
+    color: white;
+}
 
-        code {
-            font-family: Consolas, monospace;
-            color: #e2e8f0;
-        }
+.categories h2, .products h2 {
+    font-size: 35px;
+    margin-bottom: 35px;
+}
 
-        .explanation {
-            background: #1e293b;
-            border-left: 4px solid #64748b;
-            padding: 18px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
+.category-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
 
-        .explanation p {
-            margin-bottom: 12px;
-        }
+.category-buttons button {
+    background: #222;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+}
 
-        /* PREVIOUS / NEXT */
+.category-buttons .active {
+    background: #ffb400;
+    color: black;
+}
 
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-top: 35px;
-        }
+.search-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 35px;
+}
 
-        .button {
-            border: none;
-            background: #334155;
-            color: white;
-            padding: 12px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
+/* PRODUCT CARDS */
 
-        .button:hover {
-            background: #475569;
-        }
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
 
-        /* FLOATING HOME BUTTON */
+.product-card {
+    background: white;
+    color: #222;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
-        .home-bottom {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-        }
+.product-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
 
-        .home-button {
-            border: none;
-            background: #334155;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
+.product-image {
+    width: 100%;
+    height: 230px;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 15px;
+}
 
-        .home-button:hover {
-            background: #475569;
-        }
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #64748b;
-        }
+.product-info {
+    padding: 18px 18px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        @media (max-width: 600px) {
+.product-card h3 {
+    font-size: 19px;
+    color: #222;
+}
 
-            .welcome h2 {
-                font-size: 30px;
-            }
+.price {
+    color: #e69d00;
+    font-size: 23px;
+    font-weight: bold;
+}
 
-            .lesson {
-                padding: 22px;
-            }
+.product-description {
+    padding: 10px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
+    flex-grow: 1;
+}
 
-            .lesson h2 {
-                font-size: 26px;
-            }
+.product-specs {
+    margin: 0 18px 18px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #444;
+}
 
-            .navigation {
-                flex-direction: column;
-            }
+.product-specs strong {
+    color: #222;
+}
 
-            .navigation .button {
-                width: 100%;
-            }
-        }
-    </style>
+.add-btn {
+    background: #ffb400;
+    color: black;
+    padding: 13px;
+    margin: 0 18px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.add-btn:hover {
+    background: #e69d00;
+}
+
+/* CART */
+
+.cart-header {
+    background: #111;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.back-btn {
+    background: #ffb400;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.cart-content {
+    padding: 35px 7%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.cart-content h2 {
+    color: white;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 4px black;
+}
+
+.cart-item {
+    background: rgba(255,255,255,0.95);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cart-item h3 {
+    margin-bottom: 8px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity-controls button {
+    background: #222;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.remove-btn {
+    background: #e53935 !important;
+}
+
+.cart-total {
+    background: rgba(255,255,255,0.95);
+    padding: 22px;
+    border-radius: 10px;
+    margin-top: 25px;
+    text-align: right;
+}
+
+.cart-total h3 {
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.checkout-btn {
+    background: #ffb400;
+    padding: 13px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.empty-cart {
+    background: rgba(255,255,255,0.95);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    color: #777;
+}
+
+/* THANK YOU PAGE */
+
+#thankYouPage {
+    display: none;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 15px;
+    background: linear-gradient(135deg,#080808,#202020,#080808);
+    color: white;
+    text-align: center;
+}
+
+.thank-box {
+    background: linear-gradient(145deg,#1b1b1b,#101010);
+    border: 1px solid #c9a227;
+    border-radius: 18px;
+    padding: 35px 25px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 0 30px rgba(201,162,39,0.2);
+    animation: thankPop 0.6s ease;
+}
+
+.top-label {
+    color: #c9a227;
+    letter-spacing: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* RUBIK'S CUBE DESIGN */
+
+.thank-cube {
+    display: grid;
+    grid-template-columns: repeat(3,45px);
+    gap: 4px;
+    justify-content: center;
+    margin: 10px auto 25px;
+    padding: 7px;
+    background: #080808;
+    border: 2px solid #c9a227;
+    border-radius: 8px;
+    width: fit-content;
+    transform: rotate(-5deg);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.5);
+}
+
+.thank-cube div {
+    width: 45px;
+    height: 45px;
+    border: 3px solid #111;
+    border-radius: 5px;
+}
+
+.thank-cube div:nth-child(1),
+.thank-cube div:nth-child(5),
+.thank-cube div:nth-child(9) {
+    background: #ffb400;
+}
+
+.thank-cube div:nth-child(2),
+.thank-cube div:nth-child(6) {
+    background: #e53935;
+}
+
+.thank-cube div:nth-child(3),
+.thank-cube div:nth-child(7) {
+    background: #1689e8;
+}
+
+.thank-cube div:nth-child(4),
+.thank-cube div:nth-child(8) {
+    background: #21a65b;
+}
+
+.success-icon {
+    color: #c9a227;
+    border: 2px solid #c9a227;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    line-height: 51px;
+    font-size: 32px;
+    margin: 0 auto 20px;
+}
+
+.thank-box h1 {
+    color: #e5bd48;
+    font-size: 27px;
+    letter-spacing: 2px;
+}
+
+.thank-box h2 {
+    color: white;
+    font-size: 19px;
+    margin-top: 12px;
+}
+
+.gold-line {
+    width: 80px;
+    height: 3px;
+    background: #c9a227;
+    margin: 22px auto;
+}
+
+.thank-box p {
+    color: #ccc;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.thank-box .small-text {
+    margin-top: 8px;
+    color: #999;
+}
+
+.order-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 25px 0;
+    font-size: 11px;
+}
+
+.order-status span {
+    color: #aaa;
+}
+
+.order-status strong {
+    color: #e5bd48;
+}
+
+.thank-box button {
+    width: 100%;
+    padding: 15px;
+    background: #c9a227;
+    color: #111;
+    border-radius: 5px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.thank-box button:hover {
+    background: #f0ce65;
+    transform: translateY(-3px);
+}
+
+.footer-text {
+    color: #999;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 28px;
+}
+
+.footer-text span {
+    color: #c9a227;
+}
+
+@keyframes thankPop {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* FOOTER */
+
+footer {
+    background: #111;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+/* ANIMATIONS */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255,180,0,0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px 5px rgba(255,180,0,0.3);
+    }
+}
+
+@keyframes pop {
+    50% {
+        transform: scale(1.4);
+    }
+}
+
+.pop {
+    animation: pop 0.3s;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image {
+        height: 250px;
+    }
+
+    .thank-box {
+        padding: 30px 20px;
+    }
+
+    .thank-box h1 {
+        font-size: 23px;
+    }
+
+    .order-status {
+        font-size: 10px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <h1>Programming 1</h1>
-    <p>My Test Website</p>
+<header id="mainHeader">
+    <div class="logo">
+        CUBEXIS
+        <span>Beyond Every Turn</span>
+    </div>
+
+    <nav>
+        <a href="#" onclick="showHome(); return false;">Home</a>
+        <a href="#" onclick="showStore('categories'); return false;">Categories</a>
+        <a href="#" onclick="showStore('products'); return false;">Products</a>
+        <a href="#" onclick="openCart(); return false;">
+            Cart <span class="cart-count" id="cartCount">0</span>
+        </a>
+    </nav>
 </header>
 
-<div class="container">
+<!-- HOME -->
 
-    <!-- ================= HOME ================= -->
+<div id="homePage">
+    <section class="hero">
+        <h1>Mix It. Twist It. Master It.</h1>
+        <p>Discover Amazing Rubik's Cubes with Excellent Quality at Prices That Fit Your Budget.</p>
+        <button class="shop-btn" onclick="showStore('categories')">SHOP NOW</button>
+    </section>
+</div>
 
-    <section id="home">
+<!-- STORE -->
 
-        <section class="welcome">
-            <h2>Welcome! 👋</h2>
+<div id="storePage">
 
-            <p>
-                Learn programming through lessons, examples, and activities.
-            </p>
+    <button class="back-home" onclick="showHome()">← Back to Home</button>
 
-            <p>
-                Choose a topic na mababagsak kayo.
-            </p>
-        </section>
+    <section class="categories" id="categories">
+        <h2>Our Categories</h2>
 
-        <section class="topics">
+        <div class="category-buttons">
+            <button class="active" onclick="filterProducts('All', this)">All</button>
+            <button onclick="filterProducts('3x3', this)">3x3 Cubes</button>
+            <button onclick="filterProducts('2x2', this)">2x2 Cubes</button>
+            <button onclick="filterProducts('Pyraminx', this)">Pyraminx</button>
+            <button onclick="filterProducts('Megaminx', this)">Megaminx</button>
+            <button onclick="filterProducts('Accessories', this)">Accessories</button>
+        </div>
+    </section>
 
-            <div class="topic" onclick="openLesson('topic05')">
-                <h3>📚 Topic 05</h3>
-                <p>Python String Formatting</p>
+    <section class="products" id="products">
+        <h2>Our Products</h2>
+
+        <input type="text" class="search-box" id="searchInput"
+        placeholder="Search products..." onkeyup="searchProducts()">
+
+        <div class="product-container">
+
+            <!-- 3X3 CUBES -->
+
+            <div class="product-card" data-category="3x3" data-name="GAN 356 M">
+                <div class="product-image">
+                    <img src="9F2A5710-1A4D-454C-8C99-1F93C794319C.jpeg" alt="GAN 356 M">
+                </div>
+                <div class="product-info">
+                    <h3>GAN 356 M</h3>
+                    <p class="price">₱890</p>
+                </div>
+                <p class="product-description">
+                    A smooth and lightweight speed cube designed for fast and controlled solving.
+                </p>
+                <div class="product-specs">
+                    <strong>Specifications</strong><br>
+                    Size: 56 × 56 × 56 mm<br>
+                    Weight: Around 74 g<br>
+                    48 visible magnets<br>
+                    GES+ adjustment system<br>
+                    Stickerless design
+                </div>
+                <button class="add-btn" onclick="addToCart('GAN 356 M',890)">Add to Cart</button>
             </div>
 
-            <div class="topic" onclick="openLesson('topic06')">
-                <h3>📝 Topic 06</h3>
-                <p>String Access & Slicing</p>
+            <div class="product-card" data-category="3x3" data-name="GAN 356 RS">
+                <div class="product-image">
+                    <img src="E3B29F00-3BCE-4F1D-BF83-9FEAA88E6904.jpeg" alt="GAN 356 RS">
+                </div>
+                <div class="product-info">
+                    <h3>GAN 356 RS</h3>
+                    <p class="price">₱839</p>
+                </div>
+                <p class="product-description">
+                    A lightweight speed cube with adjustable tension for a personalized turning feel.
+                </p>
+                <div class="product-specs">
+                    <strong>Specifications</strong><br>
+                    Size: 56 × 56 × 56 mm<br>
+                    Non-magnetic mechanism<br>
+                    GES tension system<br>
+                    Numerical core<br>
+                    Durable plastic construction
+                </div>
+                <button class="add-btn" onclick="addToCart('GAN 356 RS',839)">Add to Cart</button>
             </div>
 
-            <div class="topic" onclick="openLesson('topic07')">
-                <h3>🔢 Topic 07</h3>
-                <p>Arithmetic Operators</p>
+            <div class="product-card" data-category="3x3" data-name="MoYu RS3M 2020">
+                <div class="product-image">
+                    <img src="FB4FA13E-44D4-4701-BBBC-E1E66804517C.jpeg" alt="MoYu RS3M 2020">
+                </div>
+                <div class="product-info">
+                    <h3>MoYu RS3M 2020</h3>
+                    <p class="price">₱427</p>
+                </div>
+                <p class="product-description">
+                    An affordable magnetic speed cube with smooth turning and reliable performance.
+                </p>
+                <div class="product-specs">
+                    <strong>Specifications</strong><br>
+                    Size: 56 × 56 × 56 mm<br>
+                    Weight: Around 86 g<br>
+                    Factory-installed magnets<br>
+                    Dual adjustment system<br>
+                    Stickerless design
+                </div>
+                <button class="add-btn" onclick="addToCart('MoYu RS3M 2020',427)">Add to Cart</button>
             </div>
 
-            <div class="topic" onclick="openLesson('topic08')">
-                <h3>➗ Topic 08</h3>
-                <p>Assignment Operators</p>
+            <div class="product-card" data-category="3x3" data-name="MoYu MF3RS3">
+                <div class="product-image">
+                    <img src="4B2BA1B0-86E1-407C-A4B4-4C552EB44F36.jpeg" alt="MoYu MF3RS3">
+                </div>
+                <div class="product-info">
+                    <h3>MoYu MF3RS3</h3>
+                    <p class="price">₱250</p>
+                </div>
+                <p class="product-description">
+                    A budget-friendly speed cube suitable for beginners who want to practice solving.
+                </p>
+                <div class="product-specs">
+                    <strong>Specifications</strong><br>
+                    Size: Approximately 56 mm<br>
+                    Non-magnetic version<br>
+                    Adjustable tension<br>
+                    Plastic construction<br>
+                    Smooth turning mechanism
+                </div>
+                <button class="add-btn" onclick="addToCart('MoYu MF3RS3',250)">Add to Cart</button>
             </div>
 
-            <div class="topic" onclick="openLesson('topic09')">
-                <h3>⚖️ Topic 09</h3>
-                <p>Conditional Operators</p>
+            <div class="product-card" data-category="3x3" data-name="QiYi Warrior S">
+                <div class="product-image">
+                    <img src="779D3D27-9119-4C4C-8D48-AA3175FFF3E5.jpeg" alt="QiYi Warrior S">
+                </div>
+                <div class="product-info">
+                    <h3>QiYi Warrior S</h3>
+                    <p class="price">₱155</p>
+                </div>
+                <p class="product-description">
+                    A simple and affordable cube with a comfortable turning feel, ideal for beginners and everyday practice.
+                </p>
+                <div class="product-specs">
+                    <strong>Specifications</strong><br>
+                    Size: Approximately 56 mm<br>
+                    Non-magnetic<br>
+                    Stickerless colored plastic<br>
+                    Adjustable screw tension<br>
+                    Lightweight construction
+                </div>
+                <button class="add-btn" onclick="addToCart('QiYi Warrior S',155)">Add to Cart</button>
             </div>
 
-            <div class="topic" onclick="openLesson('topic10')">
-                <h3>🧠 Topic 10</h3>
-                <p>Logical Operators</p>
+            <!-- 2X2 CUBES -->
+
+            <div class="product-card" data-category="2x2" data-name="Mini 2x2 Cube">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Mini 2x2 Cube</h3>
+                    <p class="price">₱120</p>
+                </div>
+                <p class="product-description">A small and simple cube for beginners.</p>
+                <button class="add-btn" onclick="addToCart('Mini 2x2 Cube',120)">Add to Cart</button>
             </div>
 
-        </section>
+            <div class="product-card" data-category="2x2" data-name="Speed 2x2 Cube">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Speed 2x2 Cube</h3>
+                    <p class="price">₱250</p>
+                </div>
+                <p class="product-description">Designed for quick turns and speed-solving practice.</p>
+                <button class="add-btn" onclick="addToCart('Speed 2x2 Cube',250)">Add to Cart</button>
+            </div>
 
+            <div class="product-card" data-category="2x2" data-name="Magnetic 2x2 Cube">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Magnetic 2x2 Cube</h3>
+                    <p class="price">₱350</p>
+                </div>
+                <p class="product-description">Magnetic positioning gives a more controlled turning feel.</p>
+                <button class="add-btn" onclick="addToCart('Magnetic 2x2 Cube',350)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="2x2" data-name="Colorful 2x2 Cube">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Colorful 2x2 Cube</h3>
+                    <p class="price">₱180</p>
+                </div>
+                <p class="product-description">A bright and fun cube for casual solving.</p>
+                <button class="add-btn" onclick="addToCart('Colorful 2x2 Cube',180)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="2x2" data-name="Premium 2x2 Cube">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Premium 2x2 Cube</h3>
+                    <p class="price">₱400</p>
+                </div>
+                <p class="product-description">A quality choice for regular cube practice.</p>
+                <button class="add-btn" onclick="addToCart('Premium 2x2 Cube',400)">Add to Cart</button>
+            </div>
+
+            <!-- PYRAMINX -->
+
+            <div class="product-card" data-category="Pyraminx" data-name="Classic Pyraminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Classic Pyraminx</h3>
+                    <p class="price">₱250</p>
+                </div>
+                <p class="product-description">A classic triangular puzzle for a different challenge.</p>
+                <button class="add-btn" onclick="addToCart('Classic Pyraminx',250)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Pyraminx" data-name="Speed Pyraminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Speed Pyraminx</h3>
+                    <p class="price">₱350</p>
+                </div>
+                <p class="product-description">Made for smooth turns and faster puzzle solving.</p>
+                <button class="add-btn" onclick="addToCart('Speed Pyraminx',350)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Pyraminx" data-name="Magnetic Pyraminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Magnetic Pyraminx</h3>
+                    <p class="price">₱450</p>
+                </div>
+                <p class="product-description">Magnets help keep turns stable and controlled.</p>
+                <button class="add-btn" onclick="addToCart('Magnetic Pyraminx',450)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Pyraminx" data-name="Stickerless Pyraminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Stickerless Pyraminx</h3>
+                    <p class="price">₱280</p>
+                </div>
+                <p class="product-description">A colorful triangular puzzle with stickerless sides.</p>
+                <button class="add-btn" onclick="addToCart('Stickerless Pyraminx',280)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Pyraminx" data-name="Pro Pyraminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Pro Pyraminx</h3>
+                    <p class="price">₱500</p>
+                </div>
+                <p class="product-description">A choice for puzzle fans who want a bigger challenge.</p>
+                <button class="add-btn" onclick="addToCart('Pro Pyraminx',500)">Add to Cart</button>
+            </div>
+
+            <!-- MEGAMINX -->
+
+            <div class="product-card" data-category="Megaminx" data-name="Classic Megaminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Classic Megaminx</h3>
+                    <p class="price">₱450</p>
+                </div>
+                <p class="product-description">A multi-sided puzzle for longer solving sessions.</p>
+                <button class="add-btn" onclick="addToCart('Classic Megaminx',450)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Megaminx" data-name="Speed Megaminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Speed Megaminx</h3>
+                    <p class="price">₱550</p>
+                </div>
+                <p class="product-description">Designed for smooth turning and speed practice.</p>
+                <button class="add-btn" onclick="addToCart('Speed Megaminx',550)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Megaminx" data-name="Stickerless Megaminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Stickerless Megaminx</h3>
+                    <p class="price">₱480</p>
+                </div>
+                <p class="product-description">A colorful multi-sided puzzle without stickers.</p>
+                <button class="add-btn" onclick="addToCart('Stickerless Megaminx',480)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Megaminx" data-name="Magnetic Megaminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Magnetic Megaminx</h3>
+                    <p class="price">₱650</p>
+                </div>
+                <p class="product-description">Magnetic support helps provide controlled turns.</p>
+                <button class="add-btn" onclick="addToCart('Magnetic Megaminx',650)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Megaminx" data-name="Professional Megaminx">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Professional Megaminx</h3>
+                    <p class="price">₱750</p>
+                </div>
+                <p class="product-description">A challenging puzzle for experienced solvers.</p>
+                <button class="add-btn" onclick="addToCart('Professional Megaminx',750)">Add to Cart</button>
+            </div>
+
+            <!-- ACCESSORIES -->
+
+            <div class="product-card" data-category="Accessories" data-name="Cube Timer">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Cube Timer</h3>
+                    <p class="price">₱350</p>
+                </div>
+                <p class="product-description">Track your solving time and monitor your progress.</p>
+                <button class="add-btn" onclick="addToCart('Cube Timer',350)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Accessories" data-name="Cube Stand">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Cube Stand</h3>
+                    <p class="price">₱100</p>
+                </div>
+                <p class="product-description">Display your favorite cube with a simple stand.</p>
+                <button class="add-btn" onclick="addToCart('Cube Stand',100)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Accessories" data-name="Cube Lubricant">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Cube Lubricant</h3>
+                    <p class="price">₱180</p>
+                </div>
+                <p class="product-description">Helps maintain smooth cube movement.</p>
+                <button class="add-btn" onclick="addToCart('Cube Lubricant',180)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Accessories" data-name="Cube Bag">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Cube Bag</h3>
+                    <p class="price">₱220</p>
+                </div>
+                <p class="product-description">Keep your puzzle protected while carrying it around.</p>
+                <button class="add-btn" onclick="addToCart('Cube Bag',220)">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-category="Accessories" data-name="Cube Mat">
+                <div class="product-image">Your Image Here</div>
+                <div class="product-info">
+                    <h3>Cube Mat</h3>
+                    <p class="price">₱300</p>
+                </div>
+                <p class="product-description">A soft surface for your cube-solving setup.</p>
+                <button class="add-btn" onclick="addToCart('Cube Mat',300)">Add to Cart</button>
+            </div>
+
+        </div>
     </section>
 
-
-    <!-- ================= TOPIC 05 ================= -->
-
-    <section id="topic05" class="lesson">
-
-        <div class="lesson-number">TOPIC 05</div>
-
-        <h2>Python String Formatting</h2>
-
-        <p>
-            String formatting is used when we want to combine text
-            with information stored inside variables.
-        </p>
-
-        <p>
-            For example, if we have a student's name and age,
-            we can put those values directly into a sentence.
-        </p>
-
-        <h3>🎯 What will you learn?</h3>
-
-        <ul>
-            <li>What string formatting means</li>
-            <li>How f-strings work</li>
-            <li>How to put variables inside text</li>
-            <li>How to create clean program output</li>
-        </ul>
-
-        <h3>💻 Example</h3>
-
-        <pre><code>name = "Gian"
-age = 20
-
-print(f"My name is {name}.")
-print(f"I am {age} years old.")</code></pre>
-
-        <h3>🔍 Explanation</h3>
-
-        <div class="explanation">
-
-            <p>
-                <strong>name = "Gian"</strong> creates a variable
-                called <strong>name</strong> and stores "Gian".
-            </p>
-
-            <p>
-                <strong>age = 20</strong> creates a variable called
-                <strong>age</strong> and stores the number 20.
-            </p>
-
-            <p>
-                The letter <strong>f</strong> before the quotation marks
-                means that we are using an <strong>f-string</strong>.
-            </p>
-
-            <p>
-                An f-string allows us to place variables inside
-                curly brackets, such as <strong>{name}</strong>.
-            </p>
-
-            <p>
-                Python replaces the curly brackets with the actual
-                value stored in the variable.
-            </p>
-
-        </div>
-
-        <h3>📌 Output</h3>
-
-        <pre><code>My name is Gian.
-I am 20 years old.</code></pre>
-
-        <h3>🧠 Simple way to understand it</h3>
-
-        <div class="explanation">
-
-            <p>
-                Think of an f-string as a sentence with a blank space.
-            </p>
-
-            <p>
-                "My name is ______."
-            </p>
-
-            <p>
-                If the variable contains "Gian", Python puts
-                "Gian" into that blank.
-            </p>
-
-            <p>
-                So the final sentence becomes:
-                <strong>My name is Gian.</strong>
-            </p>
-
-        </div>
-
-        <div class="navigation">
-            <div></div>
-
-            <button class="button" onclick="openLesson('topic06')">
-                Next Topic →
-            </button>
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TOPIC 06 ================= -->
-
-    <section id="topic06" class="lesson">
-
-        <div class="lesson-number">TOPIC 06</div>
-
-        <h2>String Access & Slicing</h2>
-
-        <p>
-            A string is a collection of characters. Characters can
-            be letters, numbers, spaces, or symbols.
-        </p>
-
-        <p>
-            Python allows us to access individual characters
-            using their index.
-        </p>
-
-        <h3>🎯 What will you learn?</h3>
-
-        <ul>
-            <li>What an index is</li>
-            <li>How Python counts characters</li>
-            <li>How to access a specific character</li>
-            <li>How negative indexes work</li>
-            <li>How string slicing works</li>
-        </ul>
-
-        <h3>💻 Example</h3>
-
-        <pre><code>word = "PYTHON"
-
-print(word[0])
-print(word[1])
-print(word[-1])</code></pre>
-
-        <h3>🔍 Understanding Indexes</h3>
-
-        <div class="explanation">
-
-            <p>
-                Python starts counting at <strong>0</strong>,
-                not 1.
-            </p>
-
-            <p>
-                For the word <strong>PYTHON</strong>:
-            </p>
-
-            <p>
-                P → index 0<br>
-                Y → index 1<br>
-                T → index 2<br>
-                H → index 3<br>
-                O → index 4<br>
-                N → index 5
-            </p>
-
-        </div>
-
-        <h3>📌 Accessing a Character</h3>
-
-        <pre><code>word = "PYTHON"
-
-print(word[0])</code></pre>
-
-        <p>
-            The output is:
-        </p>
-
-        <pre><code>P</code></pre>
-
-        <p>
-            This happens because P is located at index 0.
-        </p>
-
-        <h3>🔄 Negative Index</h3>
-
-        <pre><code>word = "PYTHON"
-
-print(word[-1])</code></pre>
-
-        <p>
-            The output is:
-        </p>
-
-        <pre><code>N</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                Negative indexes allow us to count from the end
-                of a string.
-            </p>
-
-            <p>
-                <strong>-1</strong> means the last character.
-            </p>
-
-            <p>
-                Therefore, <strong>word[-1]</strong> gives us
-                <strong>N</strong>.
-            </p>
-
-        </div>
-
-        <h3>✂️ String Slicing</h3>
-
-        <p>
-            Slicing means getting only a part of a string.
-        </p>
-
-        <pre><code>word = "PYTHON"
-
-print(word[0:2])</code></pre>
-
-        <p>
-            The output is:
-        </p>
-
-        <pre><code>PY</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                The first number is the starting index.
-            </p>
-
-            <p>
-                The second number is where Python stops.
-            </p>
-
-            <p>
-                The starting index is included, but the ending
-                index is not included.
-            </p>
-
-            <p>
-                Therefore, <strong>word[0:2]</strong> gets index
-                0 and index 1, giving us <strong>PY</strong>.
-            </p>
-
-        </div>
-
-        <div class="navigation">
-
-            <button class="button" onclick="openLesson('topic05')">
-                ← Previous
-            </button>
-
-            <button class="button" onclick="openLesson('topic07')">
-                Next Topic →
-            </button>
-
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TOPIC 07 ================= -->
-
-    <section id="topic07" class="lesson">
-
-        <div class="lesson-number">TOPIC 07</div>
-
-        <h2>Arithmetic Operators</h2>
-
-        <p>
-            Arithmetic operators are symbols used by Python
-            to perform mathematical calculations.
-        </p>
-
-        <p>
-            They allow our programs to add, subtract, multiply,
-            divide, and perform other mathematical operations.
-        </p>
-
-        <h3>🎯 What will you learn?</h3>
-
-        <ul>
-            <li>Addition</li>
-            <li>Subtraction</li>
-            <li>Multiplication</li>
-            <li>Division</li>
-            <li>Floor division</li>
-            <li>Remainder</li>
-            <li>Exponent</li>
-        </ul>
-
-        <h3>📚 Arithmetic Operators</h3>
-
-        <pre><code>+    Addition
--    Subtraction
-*    Multiplication
-/    Division
-//   Floor Division
-%    Remainder
-**   Exponent</code></pre>
-
-        <h3>💻 Example</h3>
-
-        <pre><code>a = 10
-b = 3
-
-print(a + b)
-print(a - b)
-print(a * b)
-print(a / b)
-print(a % b)</code></pre>
-
-        <h3>🔍 Explanation</h3>
-
-        <div class="explanation">
-
-            <p>
-                <strong>a = 10</strong> means that the variable
-                a contains the number 10.
-            </p>
-
-            <p>
-                <strong>b = 3</strong> means that the variable
-                b contains the number 3.
-            </p>
-
-            <p>
-                When we write <strong>a + b</strong>, Python
-                adds 10 and 3, resulting in 13.
-            </p>
-
-        </div>
-
-        <h3>➕ Addition</h3>
-
-        <pre><code>10 + 3</code></pre>
-
-        <p>
-            Result:
-        </p>
-
-        <pre><code>13</code></pre>
-
-        <p>
-            The <strong>+</strong> operator is used to add numbers.
-        </p>
-
-        <h3>➖ Subtraction</h3>
-
-        <pre><code>10 - 3</code></pre>
-
-        <p>
-            Result:
-        </p>
-
-        <pre><code>7</code></pre>
-
-        <p>
-            The <strong>-</strong> operator subtracts the second
-            number from the first.
-        </p>
-
-        <h3>✖️ Multiplication</h3>
-
-        <pre><code>10 * 3</code></pre>
-
-        <p>
-            Result:
-        </p>
-
-        <pre><code>30</code></pre>
-
-        <p>
-            The <strong>*</strong> operator multiplies numbers.
-        </p>
-
-        <h3>➗ Division</h3>
-
-        <pre><code>10 / 3</code></pre>
-
-        <p>
-            Result:
-        </p>
-
-        <pre><code>3.3333333333333335</code></pre>
-
-        <p>
-            The <strong>/</strong> operator performs normal division.
-        </p>
-
-        <h3>🧮 Remainder</h3>
-
-        <pre><code>10 % 3</code></pre>
-
-        <p>
-            Result:
-        </p>
-
-        <pre><code>1</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                The <strong>%</strong> operator gives the remainder
-                after division.
-            </p>
-
-            <p>
-                10 divided by 3 gives 3 with a remainder of 1.
-            </p>
-
-            <p>
-                Therefore:
-                <strong>10 % 3 = 1</strong>
-            </p>
-
-        </div>
-
-        <h3>🧠 Easy way to remember</h3>
-
-        <div class="explanation">
-
-            <p><strong>+</strong> → Add</p>
-            <p><strong>-</strong> → Subtract</p>
-            <p><strong>*</strong> → Multiply</p>
-            <p><strong>/</strong> → Divide</p>
-            <p><strong>%</strong> → Remainder</p>
-            <p><strong>//</strong> → Floor division</p>
-            <p><strong>**</strong> → Power / exponent</p>
-
-        </div>
-
-        <div class="navigation">
-
-            <button class="button" onclick="openLesson('topic06')">
-                ← Previous
-            </button>
-
-            <button class="button" onclick="openLesson('topic08')">
-                Next Topic →
-            </button>
-
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TOPIC 08 ================= -->
-
-    <section id="topic08" class="lesson">
-
-        <div class="lesson-number">TOPIC 08</div>
-
-        <h2>Assignment Operators</h2>
-
-        <p>
-            Assignment operators are used to give a value to a
-            variable or update the value that a variable already has.
-        </p>
-
-        <h3>💻 Basic Assignment</h3>
-
-        <pre><code>x = 10
-
-print(x)</code></pre>
-
-        <p>
-            The <strong>=</strong> operator assigns the value 10
-            to the variable x.
-        </p>
-
-        <h3>📚 Common Assignment Operators</h3>
-
-        <pre><code>=
-+=
--=
-*=
-/=
-%=
-**=</code></pre>
-
-        <h3>💻 Example</h3>
-
-        <pre><code>x = 10
-
-x += 5
-
-print(x)</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                <strong>x = 10</strong> gives x the value 10.
-            </p>
-
-            <p>
-                <strong>x += 5</strong> means add 5 to the current
-                value of x.
-            </p>
-
-            <p>
-                Therefore, x becomes 15.
-            </p>
-
-        </div>
-
-        <h3>🧠 Easy way to remember</h3>
-
-        <div class="explanation">
-
-            <p>
-                Assignment operators are mainly used when we want
-                to <strong>update a variable</strong>.
-            </p>
-
-            <p>
-                For example:
-                <strong>x += 2</strong> means "add 2 to x."
-            </p>
-
-        </div>
-
-        <div class="navigation">
-
-            <button class="button" onclick="openLesson('topic07')">
-                ← Previous
-            </button>
-
-            <button class="button" onclick="openLesson('topic09')">
-                Next Topic →
-            </button>
-
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TOPIC 09 ================= -->
-
-    <section id="topic09" class="lesson">
-
-        <div class="lesson-number">TOPIC 09</div>
-
-        <h2>Conditional Operators</h2>
-
-        <p>
-            Conditional operators are used to compare values.
-            The result of a comparison is usually either
-            <strong>True</strong> or <strong>False</strong>.
-        </p>
-
-        <h3>📚 Comparison Operators</h3>
-
-        <pre><code>==   Equal to
-!=   Not equal to
->    Greater than
-<    Less than
->=   Greater than or equal to
-<=   Less than or equal to</code></pre>
-
-        <h3>💻 Example</h3>
-
-        <pre><code>age = 20
-
-print(age >= 18)</code></pre>
-
-        <p>
-            Output:
-        </p>
-
-        <pre><code>True</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                The expression <strong>age >= 18</strong> asks:
-            </p>
-
-            <p>
-                "Is age greater than or equal to 18?"
-            </p>
-
-            <p>
-                Since age is 20, the answer is
-                <strong>True</strong>.
-            </p>
-
-        </div>
-
-        <h3>🔍 Another Example</h3>
-
-        <pre><code>number = 10
-
-print(number == 5)
-print(number != 5)</code></pre>
-
-        <p>
-            Output:
-        </p>
-
-        <pre><code>False
-True</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                10 is not equal to 5, so
-                <strong>number == 5</strong> is False.
-            </p>
-
-            <p>
-                Because 10 is different from 5,
-                <strong>number != 5</strong> is True.
-            </p>
-
-        </div>
-
-        <h3>🧠 Easy way to understand</h3>
-
-        <div class="explanation">
-
-            <p>
-                Comparison operators are like asking Python a question.
-            </p>
-
-            <p>
-                Example:
-                <strong>10 &gt; 5</strong>
-            </p>
-
-            <p>
-                Python answers:
-                <strong>True</strong>
-            </p>
-
-        </div>
-
-        <div class="navigation">
-
-            <button class="button" onclick="openLesson('topic08')">
-                ← Previous
-            </button>
-
-            <button class="button" onclick="openLesson('topic10')">
-                Next Topic →
-            </button>
-
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TOPIC 10 ================= -->
-
-    <section id="topic10" class="lesson">
-
-        <div class="lesson-number">TOPIC 10</div>
-
-        <h2>Logical Operators</h2>
-
-        <p>
-            Logical operators are used to combine or modify
-            conditions. They are commonly used when a program
-            needs to check more than one condition.
-        </p>
-
-        <h3>📚 Three Main Logical Operators</h3>
-
-        <pre><code>and
-or
-not</code></pre>
-
-        <h3>🔗 AND</h3>
-
-        <p>
-            The <strong>and</strong> operator is True only when
-            both conditions are True.
-        </p>
-
-        <pre><code>age = 20
-
-print(age >= 18 and age <= 30)</code></pre>
-
-        <p>
-            Output:
-        </p>
-
-        <pre><code>True</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                First condition:
-                <strong>age >= 18</strong> → True
-            </p>
-
-            <p>
-                Second condition:
-                <strong>age <= 30</strong> → True
-            </p>
-
-            <p>
-                Since both conditions are True,
-                the result of <strong>and</strong> is True.
-            </p>
-
-        </div>
-
-        <h3>🔀 OR</h3>
-
-        <p>
-            The <strong>or</strong> operator is True when at least
-            one of the conditions is True.
-        </p>
-
-        <pre><code>number = 5
-
-print(number == 5 or number == 10)</code></pre>
-
-        <p>
-            Output:
-        </p>
-
-        <pre><code>True</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                The first condition is True because number is 5.
-            </p>
-
-            <p>
-                The second condition is False because number is
-                not 10.
-            </p>
-
-            <p>
-                Since at least one condition is True,
-                the result is True.
-            </p>
-
-        </div>
-
-        <h3>🚫 NOT</h3>
-
-        <p>
-            The <strong>not</strong> operator reverses a Boolean value.
-        </p>
-
-        <pre><code>is_student = True
-
-print(not is_student)</code></pre>
-
-        <p>
-            Output:
-        </p>
-
-        <pre><code>False</code></pre>
-
-        <div class="explanation">
-
-            <p>
-                The original value is True.
-            </p>
-
-            <p>
-                Using <strong>not</strong> changes True into False.
-            </p>
-
-            <p>
-                In simple words, <strong>not</strong> means
-                "the opposite."
-            </p>
-
-        </div>
-
-        <h3>🧠 Easy way to remember</h3>
-
-        <div class="explanation">
-
-            <p>
-                <strong>and</strong> → both conditions must be True
-            </p>
-
-            <p>
-                <strong>or</strong> → at least one condition must be True
-            </p>
-
-            <p>
-                <strong>not</strong> → reverses True and False
-            </p>
-
-        </div>
-
-        <div class="navigation">
-
-            <button class="button" onclick="openLesson('topic09')">
-                ← Previous
-            </button>
-
-            <div></div>
-
-        </div>
-
-        <div class="home-bottom">
-            <button class="home-button" onclick="showHome()">🏠</button>
-        </div>
-
-    </section>
+    <footer>
+        <p>© 2026 CUBEXIS. All Rights Reserved.</p>
+    </footer>
 
 </div>
 
+<!-- CART -->
 
-<footer>
-    <p>© 2026 Programming 1</p>
-</footer>
+<div id="cartPage">
 
+    <div class="cart-header">
+        <button class="back-btn" onclick="closeCart()">← Back to Shop</button>
+        <h2>My Cart</h2>
+    </div>
+
+    <div class="cart-content">
+        <h2>Shopping Cart</h2>
+        <div id="cartItems"></div>
+
+        <div class="cart-total">
+            <h3>Total: ₱<span id="cartTotal">0</span></h3>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- THANK YOU PAGE -->
+
+<div id="thankYouPage">
+    <div class="thank-box">
+
+        <div class="top-label">CUBEXIS EXCLUSIVE</div>
+
+        <div class="thank-cube">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="success-icon">✓</div>
+
+        <h1>PURCHASE COMPLETE</h1>
+        <h2>Thank You for Purchasing!</h2>
+
+        <div class="gold-line"></div>
+
+        <p>Your order has been successfully completed.</p>
+        <p class="small-text">Thank you for choosing CUBEXIS. Keep twisting and keep solving!</p>
+
+        <div class="order-status">
+            <span>ORDER STATUS</span>
+            <strong>✓ CONFIRMED</strong>
+        </div>
+
+        <button onclick="showHome()">BACK TO HOME</button>
+
+        <div class="footer-text">
+            CUBEXIS <span>|</span> BEYOND EVERY TURN
+        </div>
+
+    </div>
+</div>
 
 <script>
 
-    function openLesson(topic) {
+// This list stores the products added to the cart
+let cart = [];
 
-        document.getElementById("home").style.display = "none";
+// Go back to the home page
+function showHome() {
+    document.getElementById("homePage").style.display = "block";
+    document.getElementById("storePage").style.display = "none";
+    document.getElementById("cartPage").style.display = "none";
+    document.getElementById("thankYouPage").style.display = "none";
+    document.getElementById("mainHeader").style.display = "flex";
 
-        const lessons = document.querySelectorAll(".lesson");
+    window.scrollTo(0, 0);
+}
 
-        lessons.forEach(function(lesson) {
-            lesson.style.display = "none";
-        });
+// Open the store and go to the selected section
+function showStore(section) {
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("storePage").style.display = "block";
+    document.getElementById("cartPage").style.display = "none";
+    document.getElementById("thankYouPage").style.display = "none";
+    document.getElementById("mainHeader").style.display = "flex";
 
-        const selectedLesson = document.getElementById(topic);
+    window.scrollTo(0, 0);
 
-        if (selectedLesson) {
-            selectedLesson.style.display = "block";
+    setTimeout(function() {
+        document.getElementById(section).scrollIntoView();
+    }, 100);
+}
+
+// Add a product to the cart
+function addToCart(name, price) {
+    let found = false;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].name === name) {
+            cart[i].quantity++;
+            found = true;
         }
+    }
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+    if (found === false) {
+        cart.push({
+            name: name,
+            price: price,
+            quantity: 1
         });
     }
 
+    updateCart();
 
-    function showHome() {
+    let count = document.getElementById("cartCount");
+    count.classList.remove("pop");
+    void count.offsetWidth;
+    count.classList.add("pop");
 
-        const lessons = document.querySelectorAll(".lesson");
+    alert(name + " added to cart!");
+}
 
-        lessons.forEach(function(lesson) {
-            lesson.style.display = "none";
-        });
+// Update the cart and total price
+function updateCart() {
+    let total = 0;
+    let count = 0;
 
-        document.getElementById("home").style.display = "block";
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    for (let i = 0; i < cart.length; i++) {
+        total += cart[i].price * cart[i].quantity;
+        count += cart[i].quantity;
     }
+
+    let badge = document.getElementById("cartCount");
+    badge.innerText = count;
+    badge.style.display = count > 0 ? "inline-block" : "none";
+
+    document.getElementById("cartTotal").innerText = total.toLocaleString();
+
+    let items = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        items.innerHTML = `
+            <div class="empty-cart">
+                <h3>Your cart is empty.</h3>
+                <p>Add some products to get started!</p>
+            </div>
+        `;
+    } else {
+        items.innerHTML = "";
+
+        for (let i = 0; i < cart.length; i++) {
+            items.innerHTML += `
+                <div class="cart-item">
+                    <div>
+                        <h3>${cart[i].name}</h3>
+                        <p>₱${cart[i].price.toLocaleString()} each</p>
+                        <p>Subtotal: ₱${(cart[i].price * cart[i].quantity).toLocaleString()}</p>
+                    </div>
+
+                    <div class="quantity-controls">
+                        <button onclick="changeQuantity(${i}, -1)">−</button>
+                        <span>${cart[i].quantity}</span>
+                        <button onclick="changeQuantity(${i}, 1)">+</button>
+                        <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+
+// Change the quantity of a product
+function changeQuantity(index, amount) {
+    cart[index].quantity += amount;
+
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+
+    updateCart();
+}
+
+// Remove a product from the cart
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+// Open the cart page
+function openCart() {
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("storePage").style.display = "none";
+    document.getElementById("cartPage").style.display = "block";
+    document.getElementById("thankYouPage").style.display = "none";
+    document.getElementById("mainHeader").style.display = "none";
+
+    updateCart();
+    window.scrollTo(0, 0);
+}
+
+// Return to the store from the cart
+function closeCart() {
+    document.getElementById("cartPage").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("storePage").style.display = "block";
+    document.getElementById("thankYouPage").style.display = "none";
+    document.getElementById("mainHeader").style.display = "flex";
+
+    window.scrollTo(0, 0);
+}
+
+// Checkout and show the thank-you page
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+    } else {
+        cart = [];
+        updateCart();
+
+        document.getElementById("homePage").style.display = "none";
+        document.getElementById("storePage").style.display = "none";
+        document.getElementById("cartPage").style.display = "none";
+        document.getElementById("mainHeader").style.display = "none";
+        document.getElementById("thankYouPage").style.display = "flex";
+
+        window.scrollTo(0, 0);
+    }
+}
+
+// Show products based on the selected category
+function filterProducts(category, button) {
+    let products = document.querySelectorAll(".product-card");
+
+    for (let i = 0; i < products.length; i++) {
+        if (category === "All" || products[i].dataset.category === category) {
+            products[i].style.display = "flex";
+        } else {
+            products[i].style.display = "none";
+        }
+    }
+
+    let buttons = document.querySelectorAll(".category-buttons button");
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+    }
+
+    button.classList.add("active");
+    document.getElementById("searchInput").value = "";
+}
+
+// Search for a product by name
+function searchProducts() {
+    let search = document.getElementById("searchInput").value.toLowerCase();
+    let products = document.querySelectorAll(".product-card");
+
+    for (let i = 0; i < products.length; i++) {
+        let name = products[i].dataset.name.toLowerCase();
+
+        if (name.includes(search)) {
+            products[i].style.display = "flex";
+        } else {
+            products[i].style.display = "none";
+        }
+    }
+}
+
+// Display the cart when the page loads
+updateCart();
 
 </script>
 
