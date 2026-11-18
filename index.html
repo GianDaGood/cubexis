@@ -1,1 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEXIS | Beyond Every Turn</title>
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #111 url("wallpaper.png") center/cover fixed;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .logo img {
+            width: 190px;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a, nav button {
+            color: white;
+            background: none;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        nav a:hover, nav button:hover {
+            color: #ffb400;
+        }
+
+        .cart-count {
+            background: #ffb400;
+            color: black;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            min-height: 80vh;
+            background: rgba(0,0,0,.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 30px;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .shop-btn, .back-home {
+            background: #ffb400;
+            color: black;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back-home {
+            margin: 25px 7%;
+        }
+
+        .categories, .about-us, .products {
+            background: rgba(0,0,0,.7);
+            color: white;
+            text-align: center;
+            padding: 50px 7%;
+            min-height: 65vh;
+        }
+
+        .categories h2, .about-us h2, .products h2 {
+            font-size: 35px;
+            margin-bottom: 30px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .category-buttons button {
+            background: #222;
+            color: white;
+            border: 1px solid #555;
+            padding: 18px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .category-buttons button:hover {
+            background: #ffb400;
+            color: black;
+        }
+
+        .category-description {
+            margin-top: 25px;
+            line-height: 1.6;
+        }
+
+        .about-us h3 {
+            margin-bottom: 20px;
+        }
+
+        .about-us p {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .about-tagline {
+            color: #ffb400;
+            margin-top: 25px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 35px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            align-items: stretch;
+        }
+
+        .product-card {
+            background: white;
+            color: #222;
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,.2);
+            transition: .3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .product-image {
+            height: 220px;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            color: #888;
+            text-align: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 18px 18px 5px;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #e69d00;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            padding: 12px 18px;
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .product-specs {
+            background: #f5f5f5;
+            padding: 12px;
+            margin: 0 18px 18px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .add-btn {
+            background: #ffb400;
+            color: black;
+            border: none;
+            padding: 13px;
+            margin: 0 18px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #e69d00;
+        }
+
+        .cart-header {
+            background: #111;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            background: #ffb400;
+            color: black;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 35px 7%;
+        }
+
+        .cart-content h2 {
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .empty-cart {
+            background: white;
+            color: #777;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cart-item img, .no-image {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .cart-item-info h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .cart-item-info p {
+            color: #d49400;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background: #d93636;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* CART TOTAL AND SMALL LOGO */
+
+        .cart-total {
+            background: white;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-total-logo {
+            width: 1in;
+            height: 1in;
+            flex-shrink: 0;
+        }
+
+        .cart-total-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-total-details {
+            flex: 1;
+            text-align: right;
+        }
+
+        .cart-total-details h3 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .checkout-btn {
+            background: #ffb400;
+            color: black;
+            border: none;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background: #e69d00;
+        }
+
+        #thankYouPage {
+            min-height: 100vh;
+            background: linear-gradient(135deg,#080808,#202020,#080808);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            text-align: center;
+        }
+
+        #thankYouPage.active {
+            display: flex;
+        }
+
+        .thank-box {
+            background: #151515;
+            border: 1px solid #c9a227;
+            border-radius: 18px;
+            padding: 35px 25px;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .top-label {
+            color: #c9a227;
+            letter-spacing: 4px;
+            font-size: 11px;
+            margin-bottom: 25px;
+        }
+
+        .success-icon {
+            color: #c9a227;
+            border: 2px solid #c9a227;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            line-height: 51px;
+            font-size: 32px;
+            margin: 20px auto;
+        }
+
+        .thank-box h1 {
+            color: #e5bd48;
+            font-size: 25px;
+        }
+
+        .thank-box h2 {
+            margin-top: 12px;
+            font-size: 19px;
+        }
+
+        .thank-box p {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .order-status {
+            display: flex;
+            justify-content: space-between;
+            background: #222;
+            padding: 15px;
+            margin: 25px 0;
+            font-size: 11px;
+        }
+
+        .order-status strong {
+            color: #e5bd48;
+        }
+
+        .home-btn {
+            width: 100%;
+            padding: 15px;
+            background: #c9a227;
+            color: #111;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-top: 25px;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+@media (max-width: 600px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-total {
+                padding: 18px;
+                gap: 12px;
+            }
+
+            .cart-total-logo {
+                width: 1in;
+                height: 1in;
+            }
+
+            .cart-total-details h3 {
+                font-size: 20px;
+            }
+
+            .checkout-btn {
+                padding: 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="mainHeader">
+        <div class="logo">
+            <img src="cubexis.png" alt="CUBEXIS Logo">
+            <span>Beyond Every Turn</span>
+        </div>
+
+        <nav>
+            <a onclick="showHome()">Home</a>
+            <a onclick="showCategories()">Categories</a>
+            <a onclick="showAboutUs()">About Us</a>
+            <button onclick="openCart()">Cart <span class="cart-count" id="cartCount">0</span></button>
+        </nav>
+    </header>
+
+    <!-- HOME -->
+
+    <div id="homePage" class="page active">
+        <div class="hero">
+            <h1>Mix It. Twist It. Master It.</h1>
+            <p>
+                Discover Amazing Rubik's Cubes with Excellent Quality<br>at Prices That Fit Your Budget.
+            </p>
+            <button class="shop-btn" onclick="showCategories()">SHOP NOW</button>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+
+    <div id="categoriesPage" class="page">
+        <button class="back-home" onclick="showHome()">← Back to Home</button>
+
+        <div class="categories">
+            <h2>Our Categories</h2>
+
+            <div class="category-buttons">
+                <button onclick="showProducts('All')">All Products</button>
+                <button onclick="showProducts('3x3')">3x3 Cubes</button>
+                <button onclick="showProducts('2x2')">2x2 Cubes</button>
+                <button onclick="showProducts('Pyraminx')">Pyraminx</button>
+                <button onclick="showProducts('Megaminx')">Megaminx</button>
+                <button onclick="showProducts('Accessories')">Accessories</button>
+            </div>
+
+            <p class="category-description">
+                Choose your favorite puzzle category and explore our collection.
+            </p>
+        </div>
+    </div>
+
+    <!-- ABOUT US -->
+
+    <div id="aboutPage" class="page">
+        <button class="back-home" onclick="showHome()">← Back to Home</button>
+
+        <div class="about-us">
+            <h2>ABOUT US</h2>
+            <h3>Welcome to CUBEXIS – Beyond Every Turn!</h3>
+
+            <p>
+                CUBEXIS is an online shop dedicated to Rubik’s Cube enthusiasts, speedcubers, and beginners who enjoy the challenge of solving puzzles. We offer a variety of Rubik’s Cubes from popular brands such as GAN, MoYu, and QiYi.
+            </p>
+
+            <p>
+                Our goal is to provide quality cubes that suit different skill levels, preferences, and budgets. Whether you’re just starting your cubing journey or aiming to improve your speed, CUBEXIS is here to help you find the right cube.
+            </p>
+
+            <p>
+                We believe that every turn brings a new challenge, every solve builds confidence, and every cuber has the potential to improve.
+            </p>
+
+            <h3 class="about-tagline">CUBEXIS – Beyond Every Turn.</h3>
+        </div>
+    </div>
+
+    <!-- PRODUCTS -->
+
+    <div id="productsPage" class="page">
+        <button class="back-home" onclick="showCategories()">← Back to Categories</button>
+
+        <div class="products">
+            <h2 id="productsTitle">Our Products</h2>
+
+            <input type="text" class="search-box" id="searchInput" placeholder="Search products..." oninput="searchProducts()">
+
+            <div class="product-container" id="productContainer">
+
+                <!-- 3x3 -->
+
+                <div class="product-card" data-category="3x3" data-name="GAN 356 M">
+                    <div class="product-image">
+                        <img src="Ganpart1.jpeg" alt="GAN 356 M">
+                    </div>
+                    <div class="product-info">
+                        <h3>GAN 356 M</h3><p class="price">
+                            ₱890
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A smooth and lightweight speed cube designed for fast and controlled solving.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Size: 56 × 56 × 56 mm<br>Weight: Around 74 g<br>48 visible magnets<br>GES+ adjustment system<br>Stickerless design
+                    </div>
+                    <button class="add-btn" onclick="addToCart('GAN 356 M',890)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="3x3" data-name="GAN 356 RS">
+                    <div class="product-image">
+                        <img src="Gan123.jpeg" alt="GAN 356 RS">
+                    </div>
+                    <div class="product-info">
+                        <h3>GAN 356 RS</h3><p class="price">
+                            ₱839
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A lightweight speed cube with adjustable tension for a personalized turning feel.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Size: 56 × 56 × 56 mm<br>Non-magnetic mechanism<br>GES tension system<br>Numerical core<br>Durable plastic construction
+                    </div>
+                    <button class="add-btn" onclick="addToCart('GAN 356 RS',839)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="3x3" data-name="MoYu RS3M 2020">
+                    <div class="product-image">
+                        <img src="moyu123.jpeg" alt="MoYu RS3M 2020">
+                    </div>
+                    <div class="product-info">
+                        <h3>MoYu RS3M 2020</h3><p class="price">
+                            ₱427
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        An affordable magnetic speed cube with smooth turning and reliable performance.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Size: 56 × 56 × 56 mm<br>Weight: Around 86 g<br>Factory-installed magnets<br>Dual adjustment system<br>Stickerless design
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu RS3M 2020',427)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="3x3" data-name="MoYu MF3RS3">
+                    <div class="product-image">
+                        <img src="rubiks1.jpeg" alt="MoYu MF3RS3">
+                    </div>
+                    <div class="product-info">
+                        <h3>MoYu MF3RS3</h3><p class="price">
+                            ₱250
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A budget-friendly speed cube suitable for beginners who want to practice solving.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Size: Approximately 56 mm<br>Non-magnetic version<br>Adjustable tension<br>Plastic construction<br>Smooth turning mechanism
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu MF3RS3',250)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="3x3" data-name="QiYi Warrior S">
+                    <div class="product-image">
+                        <img src="Ganproduct.jpeg" alt="QiYi Warrior S">
+                    </div>
+                    <div class="product-info">
+                        <h3>QiYi Warrior S</h3><p class="price">
+                            ₱155
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A simple and affordable cube with a comfortable turning feel, ideal for beginners and everyday practice.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Size: Approximately 56 mm<br>Non-magnetic<br>Stickerless colored plastic<br>Adjustable screw tension<br>Lightweight construction
+                    </div>
+                    <button class="add-btn" onclick="addToCart('QiYi Warrior S',155)">Add to Cart</button>
+                </div>
+
+                <!-- 2x2 -->
+
+                <div class="product-card" data-category="2x2" data-name="GAN 251 M Pro ">
+                    <div class="product-image">
+               <img src="2x2gan.jpeg" alt="GAN 251 M Pro ">
+                    </div>
+                    <div class="product-info">
+                        <h3>GAN 251 M Pro</h3><p class="price">
+                            ₱1,200
+                        </p>
+                    </div>
+                    <p class="product-description">
+A premium 2x2 speed cube built for precise turning, stability, and fast solving.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong>
+ Brand: GAN<br>
+ Type: 2x2 Cube<br>
+ Magnetic: Yes<br>
+ Design: Stickerless<br>
+ Feature: Magnetic positioning system<br>
+ Best for: Speedcubers
+                    </div>
+                    <button class="add-btn" onclick="addToCart(' 251 M Pro',1,200)">Add to Cart</button>
+                </div>
+                
+                
+
+                <div class="product-card" data-category="2x2" data-name="MoYu RS2M V2">
+                    <div class="product-image">
+               <img src="2x2moyu.jpeg" alt="MoYu RS2M V2">
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3>MoYu RS2M V2</h3><p class="price">
+                            ₱390
+                        </p>
+                    </div>
+                    <p class="product-description">
+                         A compact magnetic 2x2 speed cube designed for smooth turning and better control.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong>
+Brand: MoYu<br>
+Type: 2x2 Cube<br>
+Magnetic: Yes<br>
+Design: Stickerless<br>
+Best for: Beginners and speedcubers
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu RS2M V2',390)">Add to Cart</button>
+                </div>
+
+                <!-- PYRAMINX -->
+
+                <div class="product-card" data-category="Pyraminx" data-name="MoYu RS Pyraminx">
+                    <div class="product-image">
+               <img src="pyramid1.jpeg" alt="MoYu RS Pyraminx">
+                    </div>
+                    <div class="product-info">
+                        <h3>MoYu RS Pyraminx</h3><p class="price">
+                            ₱480
+                        </p>
+                    </div>
+                    <p class="product-description">
+A magnetic Pyraminx designed for smooth turning and better control.
+
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Triangular puzzle<br>Lightweight construction<br>Colorful pieces<br>Easy to handleMagnetic<br> stickerless<br> 3-layer pyramid puzzle
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu RS Pyraminx ',480)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="Pyraminx" data-name="Speed Pyraminx">
+                    <div class="product-image"> 
+            <img src="pyramid2.jpeg" alt="GAN Pyraminx M">
+                    </div>
+                    <div class="product-info">
+                        <h3>GAN Pyraminx M</h3><p class="price">
+                            ₱1,100
+                        </p>
+                    </div>
+                    <p class="product-description">
+                    A premium magnetic Pyraminx designed for smooth turning, precise control, and stable performance.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong>
+                        Brand: GAN<br>
+Type: Pyraminx<br>
+Magnetic: Yes<br>
+Design: Stickerless<br>
+Features: Magnetic positioning system<br>
+Best For: Speedcubers
+                    </div>
+                    <button class="add-btn" onclick="addToCart('GAN Pyraminx M',1,100)">Add to Cart</button>
+                </div>
+
+                <!-- MEGAMINX -->
+
+                <div class="product-card" data-category="Megaminx" data-name="QiYi QiHeng S2 Megaminx">
+                    <div class="product-image">
+                        <img src="mega3.jpeg" alt="QiYi QiHeng S2 Megaminx">
+                    </div>
+                    <div class="product-info">
+                        <h3>QiYi QiHeng S2 Megaminx</h3><p class="price">
+                            ₱246
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A simple and affordable Megaminx with a colorful stickerless design.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>12-sided puzzle<br>Non-magnetic version<br>Stickerless exterior<br>Rounded outer pieces<br>Designed for smooth turning
+                    </div>
+                    <button class="add-btn" onclick="addToCart('QiYi QiHeng S2 Megaminx',246)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="Megaminx" data-name="GAN Megaminx V2">
+                    <div class="product-image">
+                        <img src="magellan.png" alt="GAN Megaminx V2">
+                    </div>
+                    <div class="product-info">
+                        <h3>GAN Megaminx V2</h3><p class="price">
+                            ₱3,768.12
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A premium Megaminx built for fast and controlled turning.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>MagLev magnetic levitation system<br>Ball-core magnetic positioning<br>UV-coated version available<br>GES V2 tension adjustment<br>Approximately 15° auto-alignment
+                    </div>
+                    <button class="add-btn" onclick="addToCart('GAN Megaminx V2',3768.12)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="Megaminx" data-name="MoYu MeiLong Megaminx">
+                    <div class="product-image">
+                        <img src="mega5.jpeg" alt="MoYu MeiLong Megaminx">
+                    </div>
+                    <div class="product-info">
+                        <h3>MoYu MeiLong Megaminx</h3><p class="price">
+                            ₱648
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A beginner-friendly Megaminx with colorful stickerless pieces and smooth turning.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>12-sided puzzle<br>Non-magnetic version<br>Stickerless color scheme<br>Durable plastic construction<br>Suitable for beginners
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu MeiLong Megaminx',648)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="Megaminx" data-name="QiYi QiHeng S2 Magnetic">
+                    <div class="product-image">
+                        <img src="mega2.jpeg" alt="QiYi QiHeng S2 Magnetic">
+                    </div>
+                    <div class="product-info">
+                        <h3>QiYi QiHeng S2 Magnetic</h3><p class="price">
+                            ₱643
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A magnetic version of the QiHeng S2 designed to provide better alignment and control while turning.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Built-in magnets<br>12-sided puzzle<br>Stickerless color scheme<br>Rounded pieces<br>Smooth, controlled turning
+                    </div>
+                    <button class="add-btn" onclick="addToCart('QiYi QiHeng S2 Magnetic',643)">Add to Cart</button>
+                </div>
+
+                <div class="product-card" data-category="Megaminx" data-name="MoYu MeiLong Megaminx V2 M">
+                    <div class="product-image">
+                        <img src="mega4.jpeg" alt="MoYu MeiLong Megaminx V2 M">
+                    </div>
+                    <div class="product-info">
+                        <h3>MoYu MeiLong Megaminx V2 M</h3><p class="price">
+                            ₱770
+                        </p>
+                    </div>
+                    <p class="product-description">
+                        A smooth and lightweight magnetic Megaminx designed for better control, stability, and faster solving.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>12-sided puzzle<br>Magnetic version<br>Stickerless exterior<br>Rounded outer pieces<br>Designed for smooth turning
+                    </div>
+                    <button class="add-btn" onclick="addToCart('MoYu MeiLong Megaminx V2 M',770)">Add to Cart</button>
+                </div>
+
+                <!-- ACCESSORIES -->
+
+                <div class="product-card" data-category="Accessories" data-name="Cube Timer">
+                    <div class="product-image">
+                        <img src="timer.jpeg" alt="Digital Cube Timer">
+                    </div>
+                    <div class="product-info">
+                        <h3>Digital Cube Timer</h3><p class="price">
+                            ₱350
+                        </p>
+                    </div>
+                    <p class="product-description">
+A digital timer used to measure solving time and track speedcubing progress.
+                    </p>
+                    <div class="product-specs">
+                        <strong>Specifications</strong><br>Digital timer<br>Time tracking<br>Easy-to-read display<br>Compact design<br>For cube practice
+                    </div>
+                    <button class="add-btn" onclick="addToCart('Digital Cube Timer',350)">Add to Cart</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CART -->
+
+    <div id="cartPage" class="page">
+        <div class="cart-header">
+            <button class="back-btn" onclick="showProducts(currentCategory)">← Back to Shop</button>
+            <h2>My Cart</h2>
+        </div>
+
+        <div class="cart-content">
+            <h2>Shopping Cart</h2>
+
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart">
+                    <h3>Your cart is empty.</h3>
+                    <p>
+                        Add some products to get started!
+                    </p>
+                </div>
+            </div>
+
+            <div class="cart-total">
+
+                <div class="cart-total-logo">
+                    <img src="cartlogo.png" alt="CUBEXIS Logo">
+                </div>
+
+                <div class="cart-total-details">
+                    <h3>Total: <span id="cartTotal">₱0.00</span></h3>
+                    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- THANK YOU -->
+
+    <div id="thankYouPage" class="page">
+        <div class="thank-box">
+            <div class="top-label">
+                CUBEXIS EXCLUSIVE
+            </div>
+            <div class="success-icon">
+                ✓
+            </div>
+            <h1>PURCHASE COMPLETE</h1>
+            <h2>Thank You for Purchasing!</h2>
+            <p>
+                Your order has been successfully completed.
+            </p>
+            <p>
+                Thank you for choosing CUBEXIS. Keep twisting and keep solving!
+            </p>
+
+            <div class="order-status">
+                <span>ORDER STATUS</span>
+                <strong>✓ CONFIRMED</strong>
+            </div>
+
+            <button class="home-btn" onclick="showHome()">BACK TO HOME</button>
+            <div class="footer-text">
+                CUBEXIS | BEYOND EVERY TURN
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            © 2026 CUBEXIS. Beyond Every Turn.
+        </p>
+    </footer>
+
+    <script>
+
+        /* CART VARIABLES */
+
+        let cart = [];
+        let currentCategory = "All";
+
+        /* HIDE ALL PAGES */
+
+        function hideAllPages() {
+            let pages = document.querySelectorAll(".page");
+
+            pages.forEach(function(page) {
+                page.classList.remove("active");
+            });
+        }
+
+        /* HOME */
+
+        function showHome() {
+            hideAllPages();
+            document.getElementById("homePage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "flex";
+            window.scrollTo(0, 0);
+        }
+
+        /* CATEGORIES */
+
+        function showCategories() {
+            hideAllPages();
+            document.getElementById("categoriesPage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "flex";
+            window.scrollTo(0, 0);
+        }
+
+        /* ABOUT US */
+
+        function showAboutUs() {
+            hideAllPages();
+            document.getElementById("aboutPage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "flex";
+            window.scrollTo(0, 0);
+        }
+
+        /* SHOW PRODUCTS */
+
+        function showProducts(category) {
+            currentCategory = category;
+
+            hideAllPages();
+            document.getElementById("productsPage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "flex";
+
+            if (category == "All") {
+                document.getElementById("productsTitle").textContent = "Our Products";
+            } else {
+                document.getElementById("productsTitle").textContent = category + " Products";
+            }
+
+            document.getElementById("searchInput").value = "";
+
+            filterProducts();
+            window.scrollTo(0, 0);
+        }
+
+        /* FILTER PRODUCTS */
+
+        function filterProducts() {
+            let cards = document.querySelectorAll(".product-card");
+            let search = document.getElementById("searchInput").value.toLowerCase();
+
+            for (let i = 0; i < cards.length; i++) {
+                let category = cards[i].getAttribute("data-category");
+                let name = cards[i].getAttribute("data-name").toLowerCase();
+
+                let categoryMatch = currentCategory == "All" || category == currentCategory;
+                let searchMatch = name.includes(search);
+
+                if (categoryMatch && searchMatch) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        /* SEARCH */
+
+        function searchProducts() {
+            filterProducts();
+        }
+
+        /* OPEN CART */
+
+        function openCart() {
+            hideAllPages();
+            document.getElementById("cartPage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "flex";
+            updateCart();
+            window.scrollTo(0, 0);
+        }
+
+        /* ADD TO CART */
+
+        function addToCart(name, price) {
+            let found = false;
+            let image = "";
+
+            let cards = document.querySelectorAll(".product-card");
+
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].getAttribute("data-name") == name) {
+                    let productImage = cards[i].querySelector(".product-image img");
+
+                    if (productImage != null) {
+                        image = productImage.getAttribute("src");
+                    }
+
+                    break;
+                }
+            }
+
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i].name == name) {
+                    cart[i].quantity++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found == false) {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+
+            updateCartCount();
+            alert(name + " added to cart!");
+        }
+
+        /* CART COUNT */
+
+        function updateCartCount() {
+            let total = 0;
+
+            for (let i = 0; i < cart.length; i++) {
+                total += cart[i].quantity;
+            }
+
+            document.getElementById("cartCount").textContent = total;
+        }
+
+        /* UPDATE CART */
+
+        function updateCart() {
+            let cartItems = document.getElementById("cartItems");
+            let total = 0;
+
+            cartItems.innerHTML = "";
+
+            if (cart.length == 0) {
+                cartItems.innerHTML = `
+                <div class="empty-cart">
+                <h3>Your cart is empty.</h3>
+                <p>Add some products to get started!</p>
+                </div>
+                `;
+            } else {
+                for (let i = 0; i < cart.length; i++) {
+                    let item = cart[i];
+                    let itemTotal = item.price * item.quantity;
+
+                    total += itemTotal;
+
+                    let image = '<div class="no-image">No Image</div>';
+
+                    if (item.image != "") {
+                        image = '<img src="' + item.image + '" alt="' + item.name + '">';
+                    }
+
+                    let cartItem = document.createElement("div");
+                    cartItem.className = "cart-item";
+
+                    cartItem.innerHTML = `
+                    ${image}
+
+                    <div class="cart-item-info">
+                    <h3>${item.name}</h3>
+                    <p>${formatPrice(item.price)}</p>
+                    <small>Subtotal: ${formatPrice(itemTotal)}</small>
+                    </div>
+
+                    <div class="quantity-controls">
+                    <button onclick="changeQuantity(${i},-1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQuantity(${i},1)">+</button>
+                    </div>
+
+                    <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
+                    `;
+
+                    cartItems.appendChild(cartItem);
+                }
+            }
+
+            document.getElementById("cartTotal").textContent = formatPrice(total);
+            updateCartCount();
+        }
+
+        /* CHANGE QUANTITY */
+
+        function changeQuantity(index, amount) {
+            cart[index].quantity += amount;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            updateCart();
+        }
+
+        /* REMOVE ITEM */
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        /* FORMAT PRICE */
+
+        function formatPrice(price) {
+            return "₱" + price.toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        /* CHECKOUT */
+
+        function checkout() {
+            if (cart.length == 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById("thankYouPage").classList.add("active");
+            document.getElementById("mainHeader").style.display = "none";
+
+            cart = [];
+            updateCartCount();
+
+            window.scrollTo(0, 0);
+        }
+
+    </script>
+
+</body>
+</html>
